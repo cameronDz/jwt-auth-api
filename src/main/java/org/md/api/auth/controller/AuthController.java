@@ -55,7 +55,7 @@ public class AuthController {
         TokenDetails details = null;
         try {
             details = tokenVerificationService.verifyTokenDetails(token);
-            status = HttpStatus.CREATED;
+            status = HttpStatus.OK;
         } catch (InvalidTokenException e) {
             status = HttpStatus.UNAUTHORIZED;
         } catch (Exception e) {
