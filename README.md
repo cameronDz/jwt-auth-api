@@ -9,3 +9,13 @@ https://developer.okta.com/blog/2018/10/31/jwts-with-java
 ### Requirements ###
 The following variables need to be set in order to run
 - **JWT_SECRET_KEY**: should not be in source control
+
+
+## TODO ##
+- [ ] Deployment Steps
+- [ ] S3 Repository
+- [ ] Change to POC Repo
+- [ ] Outline deployment steps
+- [ ] Proper versioning/tagging
+- [ ] Unit Tests
+- [ ] General Code Cleanup
