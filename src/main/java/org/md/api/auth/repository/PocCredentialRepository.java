@@ -7,8 +7,11 @@ import org.md.api.auth.model.UserCredentials;
 import org.md.api.auth.model.exception.InvalidCredentialsException;
 import org.springframework.boot.SpringBootConfiguration;
 
+/**
+ * repository used to test usability of auth api
+ */
 @SpringBootConfiguration
-public class CredentialRepository implements ICredentialRepository {
+public class PocCredentialRepository implements ICredentialRepository {
 
     // mocked up data for POC
     private final List<UserCredentials> USER_LIST = Arrays.asList(new UserCredentials[] {
