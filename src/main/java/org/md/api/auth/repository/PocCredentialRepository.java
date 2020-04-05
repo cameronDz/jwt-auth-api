@@ -13,11 +13,7 @@ import org.md.api.auth.utility.CredentialValidatorUtility;
 public class PocCredentialRepository implements ICredentialRepository {
 
     // mocked up data for POC
-    private final List<UserCredentials> USER_LIST = Arrays.asList(new UserCredentials[] {
-            new UserCredentials("Cam", "SecretPassword"),
-            new UserCredentials("TestUser", "TestPassword"),
-            new UserCredentials("FakeUser", "FakePassword")
-    });
+    private final List<UserCredentials> USER_LIST = Arrays.asList(new UserCredentials[] {});
     
     @Override
     public void credentialsAreValid(String username, String password) throws InvalidCredentialsException {
