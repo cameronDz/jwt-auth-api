@@ -12,9 +12,11 @@ The following variables need to be set in order to run
 
 ## TODO ##
 - [ ] Deployment Steps
-- [ ] S3 Repository
+- [x] S3 Repository
 - [x] Change to POC Repo
 - [ ] Outline deployment steps
 - [ ] Proper versioning/tagging
 - [ ] Unit Tests
 - [ ] General Code Cleanup
+- [ ] Encrypt passwords for S3 repo
+- [ ] Set create user/password process for repository
