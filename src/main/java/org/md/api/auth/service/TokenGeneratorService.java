@@ -54,7 +54,7 @@ public class TokenGeneratorService implements ITokenGeneratorService {
      * @throws Exception
      */
     private void credentialsExist(UserCredentials credentials) throws InvalidCredentialsException {
-        if (credentials == null || GeneralUtility.isNullOrEmpty(credentials.getPassword()) || GeneralUtility.isNullOrEmpty(credentials.getUsername())) {
+        if (credentials == null || GeneralUtility.stringIsNullOrEmpty(credentials.getPassword()) || GeneralUtility.stringIsNullOrEmpty(credentials.getUsername())) {
             throw new InvalidCredentialsException();
         }
     }

@@ -7,7 +7,7 @@ public class GeneralUtility {
      * @param value string being checked
      * @return boolean true if null or empty, false otherwise
      */
-    public static boolean isNullOrEmpty(String value) {
+    public static boolean stringIsNullOrEmpty(String value) {
         return value == null || "".equals(value.trim());
     }
 }

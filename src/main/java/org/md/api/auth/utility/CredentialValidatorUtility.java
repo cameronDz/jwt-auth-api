@@ -14,7 +14,7 @@ public class CredentialValidatorUtility {
      * @return true if matching username and password can be found in list, false otherwise
      */
     public static boolean usernameAndPasswordAreValid(UserCredentials user, List<UserCredentials> userList) throws InvalidCredentialsException {
-        if (!credentialsHaveNoNullOrEmptyValues(user)) {
+        if (credentialsAreNullOrEmptyValues(user)) {
             throw new InvalidCredentialsException();
         }
         boolean isUserValidated = false;
@@ -24,7 +24,7 @@ public class CredentialValidatorUtility {
         UserCredentials validUser = null;
         for (int i = 0; i < length; i++) {
             validUser = userList.get(i);
-            if (credentialsHaveNoNullOrEmptyValues(validUser) && username.equals(validUser.getUsername()) && password.equals(validUser.getPassword())) {
+            if (!credentialsAreNullOrEmptyValues(validUser) && username.equals(validUser.getUsername()) && password.equals(validUser.getPassword())) {
                 isUserValidated = true;
                 break;
             }
@@ -32,7 +32,7 @@ public class CredentialValidatorUtility {
         return isUserValidated;
     }
     
-    private static boolean credentialsHaveNoNullOrEmptyValues(UserCredentials user) {
-        return user != null && !GeneralUtility.isNullOrEmpty(user.getUsername()) && !!GeneralUtility.isNullOrEmpty(user.getPassword());
+    private static boolean credentialsAreNullOrEmptyValues(UserCredentials user) {
+        return user == null || GeneralUtility.stringIsNullOrEmpty(user.getUsername()) || GeneralUtility.stringIsNullOrEmpty(user.getPassword());
     }
 }

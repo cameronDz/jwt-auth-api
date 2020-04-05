@@ -6,12 +6,10 @@ import java.util.List;
 import org.md.api.auth.model.UserCredentials;
 import org.md.api.auth.model.exception.InvalidCredentialsException;
 import org.md.api.auth.utility.CredentialValidatorUtility;
-import org.springframework.boot.SpringBootConfiguration;
 
 /**
  * repository used to test usability of auth api
  */
-@SpringBootConfiguration
 public class PocCredentialRepository implements ICredentialRepository {
 
     // mocked up data for POC
