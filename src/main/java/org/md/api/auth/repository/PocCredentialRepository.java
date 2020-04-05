@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.md.api.auth.model.UserCredentials;
 import org.md.api.auth.model.exception.InvalidCredentialsException;
+import org.md.api.auth.utility.CredentialValidatorUtility;
 import org.springframework.boot.SpringBootConfiguration;
 
 /**
@@ -22,28 +23,8 @@ public class PocCredentialRepository implements ICredentialRepository {
     
     @Override
     public void credentialsAreValid(String username, String password) throws InvalidCredentialsException {
-        if (!validatedCredentials(username, password)) {
+        if (!CredentialValidatorUtility.usernameAndPasswordAreValid(new UserCredentials(username, password), USER_LIST)) {
             throw new InvalidCredentialsException();
         }
-    }
-
-    /**
-     * cycle through list of username to check for a valid user
-     * @param username cred name
-     * @param password cred password
-     * @return true if matching username and password can be found in list, false otherwise
-     */
-    private boolean validatedCredentials(String username, String password) {
-        boolean isUserValidated = false;
-        int length = USER_LIST.size();
-        UserCredentials user = null;
-        for (int i = 0; i < length; i++) {
-            user = USER_LIST.get(i);
-            if (username.equals(user.getUsername()) && password.equals(user.getPassword())) {
-                isUserValidated = true;
-                break;
-            }
-        }
-        return isUserValidated;
     }
 }

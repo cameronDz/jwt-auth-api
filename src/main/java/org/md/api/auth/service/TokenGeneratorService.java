@@ -10,6 +10,7 @@ import org.md.api.auth.model.Token;
 import org.md.api.auth.model.UserCredentials;
 import org.md.api.auth.model.exception.InvalidCredentialsException;
 import org.md.api.auth.repository.ICredentialRepository;
+import org.md.api.auth.utility.GeneralUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringBootConfiguration;
@@ -53,18 +54,9 @@ public class TokenGeneratorService implements ITokenGeneratorService {
      * @throws Exception
      */
     private void credentialsExist(UserCredentials credentials) throws InvalidCredentialsException {
-        if (credentials == null || isNullOrEmpty(credentials.getPassword()) || isNullOrEmpty(credentials.getUsername())) {
+        if (credentials == null || GeneralUtility.isNullOrEmpty(credentials.getPassword()) || GeneralUtility.isNullOrEmpty(credentials.getUsername())) {
             throw new InvalidCredentialsException();
         }
-    }
-    
-    /**
-     * check if a string is null or empty
-     * @param value string being checked
-     * @return boolean true if null or empty, false otherwise
-     */
-    private boolean isNullOrEmpty(String value) {
-        return value == null || "".equals(value.trim());
     }
     
     //Sample method to construct a JWT (from okta)
