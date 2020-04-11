@@ -18,15 +18,14 @@ public class S3UserCreatorService implements IUserCreatorService {
     private S3AccessApiService s3AccessApiService;
 
     @Override
-    public UserCreationDetails createUserCredentials(UserCreationToken userCreationToken)
-            throws InvalidCredentialsException {
+    public UserCreationDetails createUserCredentials(UserCreationToken userCreationToken) throws InvalidCredentialsException {
         CredentialValidatorUtility.checkUserNameAreNullOrEmpty(userCreationToken);
         hasValidCreationToken(userCreationToken.getCreationToken());
         UserCreationDetails details = null;
         try {
             details = s3AccessApiService.createUserCredentials(userCreationToken);
         } catch (Exception e) {
-            throw new InvalidCredentialsException();
+            throw new InvalidCredentialsException(e.getMessage());
         }
         return details;
     }
