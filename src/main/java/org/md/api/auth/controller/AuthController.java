@@ -70,9 +70,9 @@ public class AuthController {
         return new ResponseEntity<TokenDetails>(details, status);
     }
 
-    @ApiOperation(value = "Create a new user.")
+    @ApiOperation(value = "Create a new user credentials based off request body.")
     @ApiResponses(value = { @ApiResponse(code = 200, message = "token validated") })
-    @RequestMapping(path="/verify", method=RequestMethod.POST)
+    @RequestMapping(path="/create", method=RequestMethod.PUT)
     public ResponseEntity<UserCreationDetails> createUser(@RequestBody UserCreationToken userCreationToken) {
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         UserCreationDetails details = new UserCreationDetails();

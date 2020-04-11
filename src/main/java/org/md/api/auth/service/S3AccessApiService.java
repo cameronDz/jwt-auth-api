@@ -11,6 +11,10 @@ import org.md.api.auth.model.UserCredentials;
 import org.md.api.auth.model.exception.InvalidCredentialsException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringBootConfiguration;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -63,7 +67,7 @@ public class S3AccessApiService {
         array.add(newCredential);
         Map<String, Object> map = new HashMap<String, Object>();
         map.put(USER_LIST_KEY, array);
-        updateCredentialsObjectWithNewUserCredentials(new ObjectMapper().valueToTree(map));
+        updateCredentialsObjectWithNewUserCredentials(map);
         return new UserCreationDetails(credentials.getUsername(), SUCCESSFULLY_CREATE_USER_MESSAGE, new Date());
     }
     
@@ -85,9 +89,15 @@ public class S3AccessApiService {
         return new ObjectMapper().readTree(result).get(PAYLOAD_KEY).get(USER_LIST_KEY);
     }
     
-    private void updateCredentialsObjectWithNewUserCredentials(JsonNode node) {
+    private void updateCredentialsObjectWithNewUserCredentials(Map<String, Object> node) throws RestClientException, JsonProcessingException {
         RestTemplate restTemplate = new RestTemplate();
+        String body = new ObjectMapper().writeValueAsString(node);
+        
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity<String>(body ,headers);
+        
         String url = s3ApiBaseUrl + s3ApiUpdateEndpoint;
-        restTemplate.put(url, node);
+        restTemplate.put(url, entity, String.class);
     }
 }
