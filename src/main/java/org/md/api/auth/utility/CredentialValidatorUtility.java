@@ -14,9 +14,7 @@ public class CredentialValidatorUtility {
      * @return true if matching username and password can be found in list, false otherwise
      */
     public static boolean usernameAndPasswordAreValid(UserCredentials user, List<UserCredentials> userList) throws InvalidCredentialsException {
-        if (credentialsAreNullOrEmptyValues(user)) {
-            throw new InvalidCredentialsException();
-        }
+        checkUserNameAreNullOrEmpty(user);
         boolean isUserValidated = false;
         String username = user.getUsername();
         String password = user.getPassword();
@@ -32,7 +30,18 @@ public class CredentialValidatorUtility {
         return isUserValidated;
     }
     
-    private static boolean credentialsAreNullOrEmptyValues(UserCredentials user) {
+    /**
+     * check if a username is null or empty, threw exception if they are
+     * @param user credentials being checked
+     * @throws InvalidCredentialsException
+     */
+    public static void checkUserNameAreNullOrEmpty(UserCredentials user) throws InvalidCredentialsException {
+        if (credentialsAreNullOrEmptyValues(user)) {
+            throw new InvalidCredentialsException();
+        }
+    }
+    
+    public static boolean credentialsAreNullOrEmptyValues(UserCredentials user) {
         return user == null || GeneralUtility.stringIsNullOrEmpty(user.getUsername()) || GeneralUtility.stringIsNullOrEmpty(user.getPassword());
     }
 }
