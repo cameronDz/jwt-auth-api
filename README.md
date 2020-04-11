@@ -22,4 +22,4 @@ The following variables need to be set in order to run
 - [ ] Unit Tests
 - [ ] General Code Cleanup
 - [ ] Encrypt passwords for S3 repo
-- [ ] Set create user/password process for repository
+- [x] Set create user/password process for repository
