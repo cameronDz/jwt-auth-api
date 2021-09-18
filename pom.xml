@@ -10,7 +10,7 @@
     </parent>
     <groupId>org.md</groupId>
     <artifactId>jwt-auth-api</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.1.0</version>
     <name>jwt-auth-api</name>
     <description>JSON Web Token Authentication API</description>
 
