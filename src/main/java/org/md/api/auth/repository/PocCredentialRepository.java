@@ -14,11 +14,17 @@ public class PocCredentialRepository implements ICredentialRepository {
 
     // mocked up data for POC
     private final List<UserCredentials> USER_LIST = Arrays.asList(new UserCredentials[] {});
-    
+
     @Override
     public void credentialsAreValid(String username, String password) throws InvalidCredentialsException {
         if (!CredentialValidatorUtility.usernameAndPasswordAreValid(new UserCredentials(username, password), USER_LIST)) {
             throw new InvalidCredentialsException();
         }
     }
+
+	@Override
+	public void secureCredentialsAreValid(String username, String password) throws InvalidCredentialsException {
+		throw new InvalidCredentialsException();
+	}
 }
+
