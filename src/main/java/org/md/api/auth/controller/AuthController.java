@@ -85,4 +85,37 @@ public class AuthController {
         }
         return new ResponseEntity<UserCreationDetails>(details, status);
     }
+
+    @ApiOperation(value = "Create a new user credentials based off request body.")
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "token validated") })
+    @RequestMapping(path="/v2/create", method=RequestMethod.PUT)
+    public ResponseEntity<UserCreationDetails> secureCreateUser(@RequestBody UserCreationToken userCreationToken) {
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        UserCreationDetails details = new UserCreationDetails();
+        try {
+            details = userCreatorService.createSecureUserCredentials(userCreationToken);
+        } catch (InvalidCredentialsException e) {
+            status = HttpStatus.UNPROCESSABLE_ENTITY;
+        } catch (Exception e) {
+            status = HttpStatus.BAD_REQUEST;
+        }
+        return new ResponseEntity<UserCreationDetails>(details, status);
+    }
+
+    @ApiOperation(value = "Request a JWT token for a user.")
+    @ApiResponses(value = { @ApiResponse(code = 201, message = "token was successfully created") })
+    @RequestMapping(path="/v2/signIn", method=RequestMethod.POST)
+    public ResponseEntity<Token> secureSignIn(@RequestBody UserCredentials credentials) {
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        Token token = null;
+        try {
+            token = tokenGeneratorService.generateSecureToken(credentials);
+            status = HttpStatus.CREATED;
+        } catch (InvalidCredentialsException e) {
+            status = HttpStatus.UNAUTHORIZED;
+        } catch (Exception e) {
+            status = HttpStatus.BAD_REQUEST;
+        }
+        return new ResponseEntity<Token>(token, status);
+    }
 }
