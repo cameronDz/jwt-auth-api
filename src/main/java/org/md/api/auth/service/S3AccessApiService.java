@@ -81,9 +81,7 @@ public class S3AccessApiService {
         ResponseEntity<String> result = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
 
         HttpStatus status = result.getStatusCode();
-        if (status == HttpStatus.OK || status == HttpStatus.CREATED) {
-            alive = true;
-        }
+        alive = (status == HttpStatus.OK || status == HttpStatus.CREATED);
         return alive;
     }
 
