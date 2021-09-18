@@ -21,12 +21,12 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 @SpringBootConfiguration
 public class TokenGeneratorService implements ITokenGeneratorService {
-    
+
     private final long SECOND = 1000;
     private final long MINUTE = 60 * SECOND;
     private final long TEN_MINUTE = 10 * MINUTE;
     private final long HOUR = 6 * TEN_MINUTE;
-    
+
     @Value("${jwt.secret.key}")
     private String secretKey;
 
@@ -38,7 +38,13 @@ public class TokenGeneratorService implements ITokenGeneratorService {
         credentialRepository.credentialsAreValid(credentials.getUsername(), credentials.getPassword());
         return createJwtToken(credentials.getUsername());
     }
-    
+
+    public Token generateSecureToken(UserCredentials credentials) throws InvalidCredentialsException {
+        credentialsExist(credentials);
+        credentialRepository.secureCredentialsAreValid(credentials.getUsername(), credentials.getPassword());
+        return createJwtToken(credentials.getUsername());
+    }
+
     /**
      * create a jwt token based off a verified username
      * @param username name that has been verified against a credential repository
@@ -47,7 +53,7 @@ public class TokenGeneratorService implements ITokenGeneratorService {
     private Token createJwtToken(String username) {
         return new Token(createJWT("123", "AUTH-API", "JWT", HOUR));
     }
- 
+
     /**
      * throw exception if credentials are null or either username/password are null or empty
      * @param credentials user credentials being c
@@ -58,7 +64,7 @@ public class TokenGeneratorService implements ITokenGeneratorService {
             throw new InvalidCredentialsException();
         }
     }
-    
+
     //Sample method to construct a JWT (from okta)
     private String createJWT(String id, String issuer, String subject, long ttlMillis) {
 

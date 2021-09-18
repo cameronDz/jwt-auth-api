@@ -8,4 +8,5 @@ public interface ITokenGeneratorService {
 
     public Token generateToken(UserCredentials credentials) throws InvalidCredentialsException;
 
+    public Token generateSecureToken(UserCredentials credentials) throws InvalidCredentialsException;
 }
