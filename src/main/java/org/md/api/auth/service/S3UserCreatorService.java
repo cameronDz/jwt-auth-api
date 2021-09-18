@@ -29,6 +29,19 @@ public class S3UserCreatorService implements IUserCreatorService {
         }
         return details;
     }
+
+    @Override
+    public UserCreationDetails createSecureUserCredentials(UserCreationToken userCreationToken) throws InvalidCredentialsException {
+        CredentialValidatorUtility.checkUserNameAreNullOrEmpty(userCreationToken);
+        hasValidCreationToken(userCreationToken.getCreationToken());
+        UserCreationDetails details = null;
+        try {
+            details = s3AccessApiService.createSecureUserCredentials(userCreationToken);
+        } catch (Exception e) {
+            throw new InvalidCredentialsException(e.getMessage());
+        }
+        return details;
+    }
     
     private void hasValidCreationToken(String token) throws InvalidCredentialsException {
         if (credentialCreationToken != null && !credentialCreationToken.equals(token)) {

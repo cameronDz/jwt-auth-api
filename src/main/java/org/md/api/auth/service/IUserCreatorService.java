@@ -7,4 +7,6 @@ import org.md.api.auth.model.exception.InvalidCredentialsException;
 public interface IUserCreatorService {
     
     public UserCreationDetails createUserCredentials(UserCreationToken userCreationToken) throws InvalidCredentialsException;
+
+    public UserCreationDetails createSecureUserCredentials(UserCreationToken userCreationToken) throws InvalidCredentialsException;
 }
