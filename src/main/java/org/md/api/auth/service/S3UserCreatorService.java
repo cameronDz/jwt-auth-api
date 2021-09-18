@@ -31,7 +31,7 @@ public class S3UserCreatorService implements IUserCreatorService {
     }
 
     private void hasValidCreationToken(String token) throws InvalidCredentialsException {
-        if (credentialCreationToken != null && !credentialCreationToken.equals(token)) {
+        if (credentialCreationToken == null || !credentialCreationToken.equals(token)) {
             throw new InvalidCredentialsException("Invalid credential creation token.");
         }
     }

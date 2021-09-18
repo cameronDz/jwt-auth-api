@@ -33,12 +33,6 @@ public class TokenGeneratorService implements ITokenGeneratorService {
     @Autowired
     private ICredentialRepository credentialRepository;
 
-    public Token generateToken(UserCredentials credentials) throws InvalidCredentialsException {
-        credentialsExist(credentials);
-        credentialRepository.credentialsAreValid(credentials.getUsername(), credentials.getPassword());
-        return createJwtToken(credentials.getUsername());
-    }
-
     public Token generateSecureToken(UserCredentials credentials) throws InvalidCredentialsException {
         credentialsExist(credentials);
         credentialRepository.secureCredentialsAreValid(credentials.getUsername(), credentials.getPassword());
