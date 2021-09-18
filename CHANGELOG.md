@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Liveness endpoint for checking/waking api and storage
+- Status codes for swagger in in responses
+
+### Removed
+
+- Unused functions and endpoints
+
 ## [1.0.0] - 2021-09-18
 
 ### Added

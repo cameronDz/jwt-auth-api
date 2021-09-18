@@ -7,6 +7,7 @@ import org.md.api.auth.model.UserCreationToken;
 import org.md.api.auth.model.UserCredentials;
 import org.md.api.auth.model.exception.InvalidCredentialsException;
 import org.md.api.auth.model.exception.InvalidTokenException;
+import org.md.api.auth.repository.ICredentialRepository;
 import org.md.api.auth.service.ITokenGeneratorService;
 import org.md.api.auth.service.ITokenVerificationService;
 import org.md.api.auth.service.IUserCreatorService;
@@ -26,6 +27,9 @@ import io.swagger.annotations.ApiResponses;
 @CrossOrigin
 @RestController
 public class AuthController {
+
+    @Autowired
+    private ICredentialRepository credentialRepository;
 
     @Autowired
     private ITokenGeneratorService tokenGeneratorService;
@@ -97,5 +101,23 @@ public class AuthController {
             status = HttpStatus.BAD_REQUEST;
         }
         return new ResponseEntity<TokenDetails>(details, status);
+    }
+
+    @ApiOperation(value = "Verifies both API and storage api are alive.")
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "successful check"),
+        @ApiResponse(code = 400, message = "request could not be processed")
+    })
+    @RequestMapping(path="/liveness", method=RequestMethod.POST)
+    public ResponseEntity<Boolean> liveness() {
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        boolean alive = false;
+        try {
+            alive = credentialRepository.repositoryIsLive();
+            status = HttpStatus.OK;
+        } catch (Exception e) {
+            status = HttpStatus.BAD_REQUEST;
+        }
+        return new ResponseEntity<Boolean>(alive, status);
     }
 }

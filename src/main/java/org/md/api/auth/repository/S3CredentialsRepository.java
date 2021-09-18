@@ -33,4 +33,9 @@ public class S3CredentialsRepository implements ICredentialRepository {
             throw new InvalidCredentialsException();
         }
     }
+
+    @Override
+    public boolean repositoryIsLive() throws Exception {
+        return s3AccessApiService.isAlive();
+    }
 }

@@ -14,6 +14,7 @@ import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
@@ -45,6 +46,9 @@ public class S3AccessApiService {
     @Value("${s3.access.api.url.endpoint.get}")
     private String s3ApiGetEndpoint;
 
+    @Value("${s3.access.api.url.endpoint.list}")
+    private String s3ApiListEndpoint;
+
     @Value("${s3.access.api.token}")
     private String s3ApiToken;
 
@@ -64,6 +68,23 @@ public class S3AccessApiService {
         JsonNode node = getSecureUserCredentialsJsonObject(username);
         String hashedPassword = node.get(PASSWORD_KEY).asText();
         return new UserCredentials(username, hashedPassword);
+    }
+
+    public boolean isAlive() {
+        boolean alive = false;
+        RestTemplate restTemplate = new RestTemplate();
+
+        HttpHeaders headers = createHttpHeaders();
+        HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+
+        String url = s3ApiBaseUrl + s3ApiListEndpoint;
+        ResponseEntity<String> result = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+
+        HttpStatus status = result.getStatusCode();
+        if (status == HttpStatus.OK || status == HttpStatus.CREATED) {
+            alive = true;
+        }
+        return alive;
     }
 
     private void createCredentialsObjectWithNewUserCredentials(String username, Map<String, Object> node) throws JsonProcessingException {
